@@ -1,0 +1,13 @@
+##For testing
+server:
+  port: 8080
+
+spring:
+  application:
+    name: TelegramBot
+
+## Telegram Bot API
+telegram:
+  botName: Monitoringctech_bot
+  botToken: 6260403776:AAEDZ9QVsh0ETAGdcivjhBKJgEu7xLQTRFw # Denis made it)
+  webHookPath: _empty_

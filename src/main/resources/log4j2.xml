@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+        <Properties>
+            <Property name="CLR">{FATAL=bright red, ERROR=red, WARN=bright yellow, INFO=Normal, DEBUG=white, TRACE=black}</Property>
+            <Property name="LOG_PATTERN_CONSOLE">
+                %highlight{%5p- %d{yy-MM-dd HH:mm:ss.SSS}}${CLR} %clr{${sys:PID}}{magenta}%clr{-}{faint}%clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan}  %highlight{: %m%n%xwEx}${CLR}
+            </Property>
+            <Property name="LOG_PATTERN_FILE">
+                %p - %d{yy-MM-dd HH:mm:ss.SSS} ${sys:PID}-[%t] : %m%n
+            </Property>
+        </Properties>
+        <Appenders>
+            <Console name="LogToConsole" target="SYSTEM_OUT">
+                <PatternLayout pattern="${LOG_PATTERN_CONSOLE}" disableAnsi="false"/>
+            </Console>
+            <File name="LogToFile" fileName="logs/TelegramBotAPI-full.log">
+                <PatternLayout pattern="${LOG_PATTERN_FILE}" disableAnsi="false"/>
+            </File>
+            <File name="LogToFileErrorsOnly" fileName="logs/TelegramBotAPI-error.log">
+                <PatternLayout pattern="${LOG_PATTERN_FILE}" disableAnsi="false"/>
+            </File>
+            <Async name="Async">
+                <AppenderRef ref="LogToFile"/>
+            </Async>
+            <Async name="AsyncError">
+                <AppenderRef ref="LogToFileErrorsOnly"/>
+            </Async>
+        </Appenders>
+        <Loggers>
+            <Root level="info">
+                <AppenderRef ref="Async"/>
+                <AppenderRef ref="LogToConsole"/>
+            </Root>
+            <Logger name="com.nemirovsky.telegrambot" level="error">
+                <AppenderRef ref="AsyncError"/>
+            </Logger>
+        </Loggers>
+    </Configuration>
